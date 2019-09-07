@@ -14,9 +14,20 @@ namespace StockPortfolio
         {
             StockInfo stockInfo = new StockInfo();
             AddStockInfo addStockInfo = new AddStockInfo();
-            FileDownloader fileDownloader = new FileDownloader();
+            JsonDownloader jsonDownloader = new JsonDownloader();
+            List<DailyStockRecord> dailyRecordList = new List<DailyStockRecord>();
+            DailyStockRecord dailyStockRecord = new DailyStockRecord();
 
-            fileDownloader.DownloadFile("tesla");
+            Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
+
+            var stockToDownload = Console.ReadLine();
+
+            jsonDownloader.AlphaVantageDownloader(stockToDownload, dailyStockRecord, dailyRecordList);
+
+
+            Console.WriteLine("Number of entries:  " + dailyRecordList.Count);
+            Console.ReadLine();
+
 
 
 
