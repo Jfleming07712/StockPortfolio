@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using Avapi.AvapiTIME_SERIES_DAILY_ADJUSTED;
 using Avapi;
+using System.Linq;
 
 namespace StockPortfolio
 {
@@ -26,13 +27,13 @@ namespace StockPortfolio
             }
         }
 
-        public void AlphaVantageDownloader(string symbol, DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList)
+        public void AlphaVantageDownloader(string symbol, DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, Calculations calculations)
         {
             // Creating the connection object
             IAvapiConnection connection = AvapiConnection.Instance;
 
             // Set up the connection and pass the API_KEY provided by alphavantage.co
-            connection.Connect("Enter Key Here");
+            connection.Connect("");
 
             // Get the TIME_SERIES_DAILY query object
             Int_TIME_SERIES_DAILY_ADJUSTED time_series_daily_adjusted =
@@ -63,8 +64,12 @@ namespace StockPortfolio
                 Console.WriteLine("TimeZone: " + data.MetaData.TimeZone);
                 Console.WriteLine("========================");
                 Console.WriteLine("========================");
+
+                //data.TimeSeries.OrderBy(x => x.DateTime);   //testing this out
                 foreach (var timeseries in data.TimeSeries)
                 {
+                    DailyStockRecord tempDailyStockRecord = new DailyStockRecord();
+
                     Console.WriteLine("open: " + timeseries.open);
                     Console.WriteLine("high: " + timeseries.high);
                     Console.WriteLine("low: " + timeseries.low);
@@ -74,24 +79,24 @@ namespace StockPortfolio
                     Console.WriteLine("Dividend: " + timeseries.dividendamount);
                     Console.WriteLine("========================");
 
-                    dailyStockRecord.Symbol = data.MetaData.Symbol;
-                    dailyStockRecord.Open = Convert.ToDecimal(timeseries.open);
-                    dailyStockRecord.High = Convert.ToDecimal(timeseries.high);
-                    dailyStockRecord.Low = Convert.ToDecimal(timeseries.low);
-                    dailyStockRecord.Close = Convert.ToDecimal(timeseries.close);
-                    dailyStockRecord.Volume = Convert.ToDecimal(timeseries.volume);
-                    dailyStockRecord.Date = Convert.ToDateTime(timeseries.DateTime);
-                    dailyStockRecord.Dividend = Convert.ToDecimal(timeseries.dividendamount);
+                    
+                    
+                    tempDailyStockRecord.Symbol = data.MetaData.Symbol;
+                    tempDailyStockRecord.Open = Convert.ToDecimal(timeseries.open);
+                    tempDailyStockRecord.High = Convert.ToDecimal(timeseries.high);
+                    tempDailyStockRecord.Low = Convert.ToDecimal(timeseries.low);
+                    tempDailyStockRecord.Close = Convert.ToDecimal(timeseries.close);
+                    tempDailyStockRecord.Volume = Convert.ToDecimal(timeseries.volume);
+                    tempDailyStockRecord.Date = Convert.ToDateTime(timeseries.DateTime);
+                    tempDailyStockRecord.Dividend = Convert.ToDecimal(timeseries.dividendamount);
+                    tempDailyStockRecord.AdjustedClose = Convert.ToDecimal(timeseries.adjustedclose);
+                    
 
-                    //Console.WriteLine(dailyStockRecord.Open);
-                    //Console.WriteLine(dailyStockRecord.High);
-                    //Console.WriteLine(dailyStockRecord.Low);
-                    //Console.WriteLine(dailyStockRecord.Close);
-                    //Console.WriteLine(dailyStockRecord.Volume);
-                    //Console.WriteLine(dailyStockRecord.Date);
-                    //Console.WriteLine(dailyStockRecord.Dividend);
+                    dailyRecordList.Add(tempDailyStockRecord);
 
-                    dailyRecordList.Add(dailyStockRecord);
+
+                    //tempDailyStockRecord.VolitilityRating = calculations.CalcVolitilityRating(dailyRecordList);
+
 
                 }
             }

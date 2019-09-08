@@ -17,16 +17,41 @@ namespace StockPortfolio
             JsonDownloader jsonDownloader = new JsonDownloader();
             List<DailyStockRecord> dailyRecordList = new List<DailyStockRecord>();
             DailyStockRecord dailyStockRecord = new DailyStockRecord();
+            Calculations calculations = new Calculations();
 
             Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
 
             var stockToDownload = Console.ReadLine();
 
-            jsonDownloader.AlphaVantageDownloader(stockToDownload, dailyStockRecord, dailyRecordList);
+            jsonDownloader.AlphaVantageDownloader(stockToDownload, dailyStockRecord, dailyRecordList, calculations);
 
+            calculations.CalcDailyChange(dailyRecordList);
+            calculations.CalcHigh52Week(dailyRecordList);
+            calculations.CalcLow52Week(dailyRecordList);
+            calculations.CalcOverNightChange(dailyRecordList);
+            calculations.CalcVolitilityRating(dailyRecordList);
 
-            Console.WriteLine("Number of entries:  " + dailyRecordList.Count);
-            Console.ReadLine();
+            //dailyRecordList.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
+
+            foreach (DailyStockRecord record in dailyRecordList)
+            {
+                Console.WriteLine("Symbol " +           record.Symbol);
+                Console.WriteLine("open: " +            record.Open);
+                Console.WriteLine("high: " +            record.High);
+                Console.WriteLine("low: " +             record.Low);
+                Console.WriteLine("close: " +           record.Close);
+                Console.WriteLine("Adj Close " +        record.AdjustedClose);
+                Console.WriteLine("volume: " +          record.Volume);
+                Console.WriteLine("date: " +            record.Date);
+                Console.WriteLine("dividend: " +        record.Dividend);
+                Console.WriteLine("52 week high " +     record.High52Week);
+                Console.WriteLine("52 week low " +      record.Low52Week);
+                Console.WriteLine("overnight change " + record.OverNightChange);
+                Console.WriteLine("daily change " +     record.DailyChange);
+                Console.WriteLine("volatility " +       record.VolitilityRating);
+
+                Console.ReadLine();
+            }
 
 
 

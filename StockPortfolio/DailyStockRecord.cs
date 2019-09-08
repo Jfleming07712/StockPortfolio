@@ -21,7 +21,7 @@ namespace StockPortfolio
         public decimal Low52Week { get; set; }
         public decimal OverNightChange { get; set; }
         public decimal DailyChange { get; set; }
-        public decimal VolitilityRating { get; set; }
+        public double VolitilityRating { get; set; }
         public decimal Dividend { get; set; }
     }
 }
