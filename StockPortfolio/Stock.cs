@@ -5,7 +5,7 @@ using System.Text;
 namespace StockPortfolio
 {
     ///"Symbol","Name","LastSale","MarketCap","IPOyear","Sector","industry","Summary Quote",
-    public class StockInfo
+    public class Stock
     {
         public string Symbol { get; set; }
         public string Name { get; set; }
@@ -15,6 +15,7 @@ namespace StockPortfolio
         public string Sector { get; set; }
         public string Industry { get; set; }
         public string SummaryQuote { get; set; }
+        public List<DailyStockRecord> DailyStockRecords { get; set; }
 
     }
 }

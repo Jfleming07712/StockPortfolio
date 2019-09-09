@@ -11,20 +11,20 @@ namespace StockPortfolio
     public class AddStockInfo
     {
 
-        public void AddStock(StockInfo stockInfo, string source)
+        public void AddStock(string source)
         {
             using (var reader = new StreamReader(source))
             using (var csv = new CsvReader(reader))
             {
-                var records = csv.GetRecords<StockInfo>();
-                foreach (StockInfo record in records)
+                var records = csv.GetRecords<Stock>();
+                foreach (Stock record in records)
                 {
                     Console.WriteLine(record.Name + " " + record.Symbol + " " + record.MarketCap + " " + record.IPOyear + " " + record.Sector);
                     this.SqlForAddingRecord(record);
                 }
             }
         }
-        public void SqlForAddingRecord(StockInfo record)
+        public void SqlForAddingRecord(Stock record)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
@@ -54,11 +54,11 @@ namespace StockPortfolio
                 }
         }
 
-        public void AddAllStocksToDataBase(StockInfo stockInfo, string sourceFile1, string sourceFile2, string sourceFile3)
+        public void AddAllStocksToDataBase(Stock stock, string sourceFile1, string sourceFile2, string sourceFile3)
         {
-            this.AddStock(stockInfo, sourceFile1);
-            this.AddStock(stockInfo, sourceFile2);
-            this.AddStock(stockInfo, sourceFile3);
+            this.AddStock(sourceFile1);
+            this.AddStock(sourceFile2);
+            this.AddStock(sourceFile3);
         }
     }
 }

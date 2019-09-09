@@ -12,7 +12,7 @@ namespace StockPortfolio
     {
         static void Main(string[] args)
         {
-            StockInfo stockInfo = new StockInfo();
+            Stock stock = new Stock();
             AddStockInfo addStockInfo = new AddStockInfo();
             JsonDownloader jsonDownloader = new JsonDownloader();
             List<DailyStockRecord> dailyRecordList = new List<DailyStockRecord>();
@@ -33,7 +33,7 @@ namespace StockPortfolio
             //Console.ReadLine();
             // end test section
 
-            userInterface.StartUpOptions(dailyStockRecord, dailyRecordList, addStockInfo, stockInfo, calculations, jsonDownloader, downloadStockHistoricalRecords, sourceFile1, sourceFile2, sourceFile3, userAccountCreator, user, userInterface);
+            userInterface.StartUpOptions(dailyStockRecord, dailyRecordList, addStockInfo, stock, calculations, jsonDownloader, downloadStockHistoricalRecords, sourceFile1, sourceFile2, sourceFile3, userAccountCreator, user, userInterface);
 
         }
     }

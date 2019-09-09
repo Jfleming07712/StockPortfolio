@@ -9,7 +9,7 @@ namespace StockPortfolio
 {
     public class UserAccountCreator
     {
-        public void CreateUserAccount(User user, UserInterface userInterface, DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, AddStockInfo addStockInfo, StockInfo stockInfo, Calculations calculations, JsonDownloader jsonDownloader, DownloadStockHistoricalRecords downloadStockHistoricalRecords, string sourceFile1, string sourceFile2, string sourceFile3, UserAccountCreator userAccountCreator)
+        public void CreateUserAccount(User user, UserInterface userInterface, DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, AddStockInfo addStockInfo, Stock stockInfo, Calculations calculations, JsonDownloader jsonDownloader, DownloadStockHistoricalRecords downloadStockHistoricalRecords, string sourceFile1, string sourceFile2, string sourceFile3, UserAccountCreator userAccountCreator)
         {
             this.CreateUserName(user);
             this.CreateUserPassword(user);

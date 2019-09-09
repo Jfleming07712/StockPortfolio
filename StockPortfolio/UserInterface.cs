@@ -6,7 +6,7 @@ namespace StockPortfolio
 {
     public class UserInterface
     {
-        public void StartUpOptions(DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, AddStockInfo addStockInfo, StockInfo stockInfo, Calculations calculations, JsonDownloader jsonDownloader, DownloadStockHistoricalRecords downloadStockHistoricalRecords, string sourceFile1, string sourceFile2, string sourceFile3, UserAccountCreator userAccountCreator, User user, UserInterface userInterface)
+        public void StartUpOptions(DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, AddStockInfo addStockInfo, Stock stockInfo, Calculations calculations, JsonDownloader jsonDownloader, DownloadStockHistoricalRecords downloadStockHistoricalRecords, string sourceFile1, string sourceFile2, string sourceFile3, UserAccountCreator userAccountCreator, User user, UserInterface userInterface)
         {
             string tempUserInput;
 
