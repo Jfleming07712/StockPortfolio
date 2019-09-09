@@ -18,53 +18,23 @@ namespace StockPortfolio
             List<DailyStockRecord> dailyRecordList = new List<DailyStockRecord>();
             DailyStockRecord dailyStockRecord = new DailyStockRecord();
             Calculations calculations = new Calculations();
+            DownloadStockHistoricalRecords downloadStockHistoricalRecords = new DownloadStockHistoricalRecords();
+            UserInterface userInterface = new UserInterface();
+            UserAccountCreator userAccountCreator = new UserAccountCreator();
+            User user = new User();
 
-            Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
+            var sourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt";
+            var sourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt";
+            var sourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt";
 
-            var stockToDownload = Console.ReadLine();
-
-            jsonDownloader.AlphaVantageDownloader(stockToDownload, dailyStockRecord, dailyRecordList, calculations);
-
-            calculations.CalcDailyChange(dailyRecordList);
-            calculations.CalcHigh52Week(dailyRecordList);
-            calculations.CalcLow52Week(dailyRecordList);
-            calculations.CalcOverNightChange(dailyRecordList);
-            calculations.CalcVolitilityRating(dailyRecordList);
-            calculations.CalcDividendYield(dailyRecordList);
-
-            addStockInfo.SqlForAddingDailyRecord(dailyRecordList);
-
-            //dailyRecordList.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
-
-            //foreach (DailyStockRecord record in dailyRecordList)
-            //{
-            //    Console.WriteLine("Symbol " + record.Symbol);
-            //    Console.WriteLine("open: " + record.Open);
-            //    Console.WriteLine("high: " + record.High);
-            //    Console.WriteLine("low: " + record.Low);
-            //    Console.WriteLine("close: " + record.Close);
-            //    Console.WriteLine("Adj Close " + record.AdjustedClose);
-            //    Console.WriteLine("volume: " + record.Volume);
-            //    Console.WriteLine("date: " + record.Date);
-            //    Console.WriteLine("dividend: " + record.Dividend);
-            //    Console.WriteLine("52 week high " + record.High52Week);
-            //    Console.WriteLine("52 week low " + record.Low52Week);
-            //    Console.WriteLine("overnight change " + record.OverNightChange);
-            //    Console.WriteLine("daily change " + record.DailyChange);
-            //    Console.WriteLine("volatility " + record.VolitilityRating);
-            //    Console.WriteLine("Dividend Yeild " + record.DividendYield);
-
-            //    Console.ReadLine();
-            //}
+            // test section
 
 
-            //var sourceFile1 = @"C:\Users\jflem\source\repos\StockPortfolio\StockPortfolio\companylist1.txt";
-            //var sourceFile2 = @"C:\Users\jflem\source\repos\StockPortfolio\StockPortfolio\companylist2.txt";
-            //var sourceFile3 = @"C:\Users\jflem\source\repos\StockPortfolio\StockPortfolio\companylist3.txt";
+            //Console.ReadLine();
+            // end test section
 
-            //addStockInfo.AddStock(stockInfo, sourceFile1);
-            //addStockInfo.AddStock(stockInfo, sourceFile2);
-            //addStockInfo.AddStock(stockInfo, sourceFile3);
+            userInterface.StartUpOptions(dailyStockRecord, dailyRecordList, addStockInfo, stockInfo, calculations, jsonDownloader, downloadStockHistoricalRecords, sourceFile1, sourceFile2, sourceFile3, userAccountCreator, user, userInterface);
+
         }
     }
 }

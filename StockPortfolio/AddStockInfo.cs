@@ -53,5 +53,12 @@ namespace StockPortfolio
                         '{record.DividendYield}' from Stock where Symbol = '{record.Symbol}';");
                 }
         }
+
+        public void AddAllStocksToDataBase(StockInfo stockInfo, string sourceFile1, string sourceFile2, string sourceFile3)
+        {
+            this.AddStock(stockInfo, sourceFile1);
+            this.AddStock(stockInfo, sourceFile2);
+            this.AddStock(stockInfo, sourceFile3);
+        }
     }
 }

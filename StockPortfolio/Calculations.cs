@@ -111,5 +111,15 @@ namespace StockPortfolio
                 record.DividendYield = decimal.Round(dividendYield, 2, MidpointRounding.AwayFromZero);
             }
         }
+
+        public void CalculationsForDailyRecord(List<DailyStockRecord> dailyRecordList)
+        {
+            this.CalcDailyChange(dailyRecordList);
+            this.CalcHigh52Week(dailyRecordList);
+            this.CalcLow52Week(dailyRecordList);
+            this.CalcOverNightChange(dailyRecordList);
+            this.CalcVolitilityRating(dailyRecordList);
+            this.CalcDividendYield(dailyRecordList);
+        }
     }
 }
