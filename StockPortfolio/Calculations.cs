@@ -93,6 +93,22 @@ namespace StockPortfolio
                 //var volatility = standardDeviation * 100;
 
                 record.VolitilityRating = standardDeviation;
+                if (Double.IsNaN(record.VolitilityRating))
+                {
+                    record.VolitilityRating = -1;
+                }
+            }
+        }
+
+        public void CalcDividendYield(List<DailyStockRecord> dailyRecordList)
+        {
+            var queryList = dailyRecordList.ToList();
+
+            foreach (DailyStockRecord record in dailyRecordList)
+            {
+                var dividendYield = queryList.Where(x => x.Date > record.Date.AddYears(-1) && x.Date <= record.Date).Select(x => x.Dividend).Sum() / record.Close;
+                dividendYield = dividendYield * 100;
+                record.DividendYield = decimal.Round(dividendYield, 2, MidpointRounding.AwayFromZero);
             }
         }
     }

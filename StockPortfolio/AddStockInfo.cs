@@ -37,5 +37,21 @@ namespace StockPortfolio
                     VALUES ('{record.Name}', '{record.Symbol}', '{record.MarketCap}', '{record.IPOyear}', '{record.Sector}');");
             }
         }
+
+        public void SqlForAddingDailyRecord(List<DailyStockRecord> dailyStockRecords)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
+
+                foreach (DailyStockRecord record in dailyStockRecords)
+                {
+                    connection.Query(
+                        $@"INSERT INTO DailyRecord
+                        (StockID, Symbol, RecordDate, OpenPrice, DailyHigh, DailyLow, ClosePrice, AdjustedClose, Volume, High52Week, Low52Week, OverNightChange, 
+                        DailyChange, VolatilityRating, DividendYield)
+                        Select StockID, '{record.Symbol}', '{record.Date}', '{record.Open}', '{record.High}', '{record.Low}', '{record.Close}', '{record.AdjustedClose}',
+                        '{record.Volume}', '{record.High52Week}', '{record.Low52Week}', '{record.OverNightChange}', '{record.DailyChange}', '{record.VolitilityRating}',
+                        '{record.DividendYield}' from Stock where Symbol = '{record.Symbol}';");
+                }
+        }
     }
 }

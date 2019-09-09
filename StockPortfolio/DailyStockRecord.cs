@@ -23,5 +23,7 @@ namespace StockPortfolio
         public decimal DailyChange { get; set; }
         public double VolitilityRating { get; set; }
         public decimal Dividend { get; set; }
+        public decimal DividendYield { get; set; }
+
     }
 }
