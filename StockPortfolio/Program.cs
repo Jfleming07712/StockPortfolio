@@ -21,8 +21,10 @@ namespace StockPortfolio
             DownloadStockHistoricalRecords downloadStockHistoricalRecords = new DownloadStockHistoricalRecords();
             UserInterface userInterface = new UserInterface();
             UserAccountCreator userAccountCreator = new UserAccountCreator();
+            UserLoggin userLoggin = new UserLoggin();
             User user = new User();
             ProgramContext programContext = new ProgramContext()
+            
             {
                 Stock = stock,
                 AddStockInfo = addStockInfo,
@@ -33,6 +35,7 @@ namespace StockPortfolio
                 DownloadStockHistoricalRecords = downloadStockHistoricalRecords,
                 UserInterface = userInterface,
                 UserAccountCreator = userAccountCreator,
+                UserLoggin = userLoggin,
                 User = user,
                 SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt",
                 SourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt",

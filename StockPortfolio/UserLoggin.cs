@@ -42,12 +42,21 @@ namespace StockPortfolio
             {
                 // grant access
                 programContext.User.LoggedIn = true;
-                programContext.UserInterface.RegisteredUserMenu(programContext.User);
+                programContext.UserInterface.RegisteredUserMenu(programContext);
             }
             else
             {
                 Console.WriteLine("invalid password please try again");
                 this.VerifyPassword(programContext, registeredUser);
+            }
+        }
+
+        public void ValidateUserIsLoggedIn(ProgramContext programContext)
+        {
+            if (programContext.User.LoggedIn != true)
+            {
+                Console.WriteLine("Please Log In");
+                programContext.UserInterface.StartUpOptions(programContext);
             }
         }
     }
