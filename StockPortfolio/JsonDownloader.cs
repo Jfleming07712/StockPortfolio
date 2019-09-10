@@ -11,11 +11,11 @@ namespace StockPortfolio
 {
     public class JsonDownloader
     {
-        public void DownloadJson(string symbol, List<DailyStockRecord> recordList)
+        public void DownloadJson(ProgramContext programContext, List<DailyStockRecord> recordList)
         {
             using (var client = new WebClient())
             {
-                string RawJson = client.DownloadString("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + symbol + "&outputsize=full&apikey=XWLLHF7YZER61GTB");
+                string RawJson = client.DownloadString("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + programContext.Symbol + programContext.AlphaVantageKey);
 
                 recordList = JsonConvert.DeserializeObject<List<DailyStockRecord>>(RawJson);
 
@@ -27,13 +27,13 @@ namespace StockPortfolio
             }
         }
 
-        public void AlphaVantageDownloader(string symbol, DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, Calculations calculations)
+        public void AlphaVantageDownloader(ProgramContext programContext)
         {
             // Creating the connection object
             IAvapiConnection connection = AvapiConnection.Instance;
 
             // Set up the connection and pass the API_KEY provided by alphavantage.co
-            connection.Connect("");
+            connection.Connect(programContext.AlphaVantageKey);
 
             // Get the TIME_SERIES_DAILY query object
             Int_TIME_SERIES_DAILY_ADJUSTED time_series_daily_adjusted =
@@ -42,7 +42,7 @@ namespace StockPortfolio
             // Perform the TIME_SERIES_DAILY request and get the result
             IAvapiResponse_TIME_SERIES_DAILY_ADJUSTED time_series_dailyResponse =
             time_series_daily_adjusted.Query(
-                 symbol,
+                 programContext.Symbol,
                  Const_TIME_SERIES_DAILY_ADJUSTED.TIME_SERIES_DAILY_ADJUSTED_outputsize.full);
 
             // Printout the results
@@ -90,9 +90,9 @@ namespace StockPortfolio
                     tempDailyStockRecord.Date = Convert.ToDateTime(timeseries.DateTime);
                     tempDailyStockRecord.Dividend = Convert.ToDecimal(timeseries.dividendamount);
                     tempDailyStockRecord.AdjustedClose = Convert.ToDecimal(timeseries.adjustedclose);
-                    
 
-                    dailyRecordList.Add(tempDailyStockRecord);
+
+                    programContext.DailyRecordList.Add(tempDailyStockRecord);
 
 
                     //tempDailyStockRecord.VolitilityRating = calculations.CalcVolitilityRating(dailyRecordList);

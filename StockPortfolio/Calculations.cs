@@ -7,59 +7,59 @@ namespace StockPortfolio
 {
     public class Calculations
     {
-        public void CalcHigh52Week(List<DailyStockRecord> dailyRecordList)
+        public void CalcHigh52Week(ProgramContext programContext)
         {
-            var queryList = dailyRecordList.ToList();
+            var queryList = programContext.DailyRecordList.ToList();
 
-            foreach (DailyStockRecord record in dailyRecordList)
+            foreach (DailyStockRecord record in programContext.DailyRecordList)
             {
                 record.High52Week = queryList.Where(x => x.Date > record.Date.AddYears(-1) && x.Date <= record.Date).Select(x => x.High).Max();
             }
         }
 
-        public void CalcLow52Week(List<DailyStockRecord> dailyRecordList)
+        public void CalcLow52Week(ProgramContext programContext)
         {
-            var queryList = dailyRecordList.ToList();
+            var queryList = programContext.DailyRecordList.ToList();
 
-            foreach (DailyStockRecord record in dailyRecordList)
+            foreach (DailyStockRecord record in programContext.DailyRecordList)
             {
                 record.Low52Week = queryList.Where(x => x.Date > record.Date.AddYears(-1) && x.Date <= record.Date).Select(x => x.Low).Min();
             }
         }
 
-        public void CalcOverNightChange (List<DailyStockRecord> dailyRecordList)
+        public void CalcOverNightChange (ProgramContext programContext)
         {
-            dailyRecordList.OrderByDescending(x => x.Date);
+            programContext.DailyRecordList.OrderByDescending(x => x.Date);
 
-            foreach (DailyStockRecord record in dailyRecordList)
+            foreach (DailyStockRecord record in programContext.DailyRecordList)
             {
-                if (dailyRecordList.IndexOf(record) != dailyRecordList.Count - 1)
+                if (programContext.DailyRecordList.IndexOf(record) != programContext.DailyRecordList.Count - 1)
                 {
-                    record.OverNightChange = record.Open - dailyRecordList[dailyRecordList.IndexOf(record) + 1].Close;
+                    record.OverNightChange = record.Open - programContext.DailyRecordList[programContext.DailyRecordList.IndexOf(record) + 1].Close;
                 }
             }
         }
 
-        public void CalcDailyChange(List<DailyStockRecord> dailyRecordList)
+        public void CalcDailyChange(ProgramContext programContext)
         {
-            dailyRecordList.OrderByDescending(x => x.Date);
+            programContext.DailyRecordList.OrderByDescending(x => x.Date);
 
-            foreach (DailyStockRecord record in dailyRecordList)
+            foreach (DailyStockRecord record in programContext.DailyRecordList)
             {
-                if (dailyRecordList.IndexOf(record) != dailyRecordList.Count - 1)
+                if (programContext.DailyRecordList.IndexOf(record) != programContext.DailyRecordList.Count - 1)
                 {
                     record.DailyChange = record.Close - record.Open;
                 }
             }
         }
 
-        public void CalcVolitilityRating(List<DailyStockRecord> dailyRecordList)
+        public void CalcVolitilityRating(ProgramContext programContext)
         {
 
             
             List<DailyStockRecord> tempDailyRecordList = new List<DailyStockRecord>();
 
-            var baseDailyRecordList = dailyRecordList.OrderBy(x => x.Date);
+            var baseDailyRecordList = programContext.DailyRecordList.OrderBy(x => x.Date);
 
             //dailyRecordList.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
 
@@ -100,11 +100,11 @@ namespace StockPortfolio
             }
         }
 
-        public void CalcDividendYield(List<DailyStockRecord> dailyRecordList)
+        public void CalcDividendYield(ProgramContext programContext)
         {
-            var queryList = dailyRecordList.ToList();
+            var queryList = programContext.DailyRecordList.ToList();
 
-            foreach (DailyStockRecord record in dailyRecordList)
+            foreach (DailyStockRecord record in programContext.DailyRecordList)
             {
                 var dividendYield = queryList.Where(x => x.Date > record.Date.AddYears(-1) && x.Date <= record.Date).Select(x => x.Dividend).Sum() / record.Close;
                 dividendYield = dividendYield * 100;
@@ -112,14 +112,14 @@ namespace StockPortfolio
             }
         }
 
-        public void CalculationsForDailyRecord(List<DailyStockRecord> dailyRecordList)
+        public void CalculationsForDailyRecord(ProgramContext programContext)
         {
-            this.CalcDailyChange(dailyRecordList);
-            this.CalcHigh52Week(dailyRecordList);
-            this.CalcLow52Week(dailyRecordList);
-            this.CalcOverNightChange(dailyRecordList);
-            this.CalcVolitilityRating(dailyRecordList);
-            this.CalcDividendYield(dailyRecordList);
+            this.CalcDailyChange(programContext);
+            this.CalcHigh52Week(programContext);
+            this.CalcLow52Week(programContext);
+            this.CalcOverNightChange(programContext);
+            this.CalcVolitilityRating(programContext);
+            this.CalcDividendYield(programContext);
         }
     }
 }

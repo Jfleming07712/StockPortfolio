@@ -9,7 +9,7 @@ namespace StockPortfolio
 {
     public class UserLoggin
     {
-        public void LogginUser(User user)
+        public void LogginUser(ProgramContext programContext)
         {
             Console.WriteLine("Please enter your Username");
             var givenUserName = Console.ReadLine();
@@ -17,11 +17,37 @@ namespace StockPortfolio
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
-                var ownedUserNames = connection.Query<User>(
+                var registeredUser = connection.QuerySingle<User>(
                     $@"select username
                         from AccountLoginInfo
-                        where username = '{givenUserName}'").ToList();
-                foreach (User user in RegisteredUsers)
+                        where username = '{givenUserName}'");
+                if (givenUserName == registeredUser.UserName)
+                {
+                    this.VerifyPassword(programContext, registeredUser);
+                }
+                else
+                {
+                    Console.WriteLine("invalid username please try again");
+                    this.LogginUser(programContext);
+                }
+            }
+        }
+
+        public void VerifyPassword(ProgramContext programContext, User registeredUser)
+        {
+            Console.WriteLine("Please enter password");
+            var givenPassword = Console.ReadLine();
+
+            if (givenPassword == registeredUser.Password)
+            {
+                // grant access
+                programContext.User.LoggedIn = true;
+                programContext.UserInterface.RegisteredUserMenu(programContext.User);
+            }
+            else
+            {
+                Console.WriteLine("invalid password please try again");
+                this.VerifyPassword(programContext, registeredUser);
             }
         }
     }

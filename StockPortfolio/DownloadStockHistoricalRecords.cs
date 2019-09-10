@@ -6,17 +6,17 @@ namespace StockPortfolio
 {
     public class DownloadStockHistoricalRecords
     {
-        public void DownloadHistoricalStockRecords(DailyStockRecord dailyStockRecord, List<DailyStockRecord> dailyRecordList, Calculations calculations, JsonDownloader jsonDownloader, AddStockInfo addStockInfo)
+        public void DownloadHistoricalStockRecords(ProgramContext programContext)
         {
             Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
 
             var stockToDownload = Console.ReadLine();
 
-            jsonDownloader.AlphaVantageDownloader(stockToDownload, dailyStockRecord, dailyRecordList, calculations);
+            programContext.JsonDownloader.AlphaVantageDownloader(programContext);
 
-            calculations.CalculationsForDailyRecord(dailyRecordList);
+            programContext.Calculations.CalculationsForDailyRecord(programContext);
 
-            addStockInfo.SqlForAddingDailyRecord(dailyRecordList);
+            programContext.AddStockInfo.SqlForAddingDailyRecord(programContext);
         }
 
         

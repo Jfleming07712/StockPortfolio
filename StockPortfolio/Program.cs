@@ -22,10 +22,18 @@ namespace StockPortfolio
             UserInterface userInterface = new UserInterface();
             UserAccountCreator userAccountCreator = new UserAccountCreator();
             User user = new User();
+            ProgramContext programContext = new ProgramContext();
 
-            var sourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt";
-            var sourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt";
-            var sourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt";
+            programContext.SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt";
+            programContext.SourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt";
+            programContext.SourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt";
+            programContext.SourceFileKey = @"C:\Users\jflem\Documents\Notepad stuff\alpha vantage api key.txt";
+
+            using (var reader = new StreamReader(programContext.SourceFileKey))
+            {
+                programContext.AlphaVantageKey = reader.ReadLine();
+            }
+
 
             // test section
 
@@ -33,7 +41,7 @@ namespace StockPortfolio
             //Console.ReadLine();
             // end test section
 
-            userInterface.StartUpOptions(dailyStockRecord, dailyRecordList, addStockInfo, stock, calculations, jsonDownloader, downloadStockHistoricalRecords, sourceFile1, sourceFile2, sourceFile3, userAccountCreator, user, userInterface);
+            userInterface.StartUpOptions(programContext);
 
         }
     }

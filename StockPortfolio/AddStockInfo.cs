@@ -38,11 +38,11 @@ namespace StockPortfolio
             }
         }
 
-        public void SqlForAddingDailyRecord(List<DailyStockRecord> dailyStockRecords)
+        public void SqlForAddingDailyRecord(ProgramContext programContext)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
 
-                foreach (DailyStockRecord record in dailyStockRecords)
+                foreach (DailyStockRecord record in programContext.DailyRecordList)
                 {
                     connection.Query(
                         $@"INSERT INTO DailyRecord
@@ -54,11 +54,11 @@ namespace StockPortfolio
                 }
         }
 
-        public void AddAllStocksToDataBase(Stock stock, string sourceFile1, string sourceFile2, string sourceFile3)
+        public void AddAllStocksToDataBase(ProgramContext programContext)
         {
-            this.AddStock(sourceFile1);
-            this.AddStock(sourceFile2);
-            this.AddStock(sourceFile3);
+            this.AddStock(programContext.SourceFile1);
+            this.AddStock(programContext.SourceFile2);
+            this.AddStock(programContext.SourceFile3);
         }
     }
 }
