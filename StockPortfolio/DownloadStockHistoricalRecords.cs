@@ -17,6 +17,8 @@ namespace StockPortfolio
             programContext.Calculations.CalculationsForDailyRecord(programContext);
 
             programContext.AddStockInfo.SqlForAddingDailyRecord(programContext);
+
+            programContext.UserInterface.StartUpOptions(programContext);
         }
 
         

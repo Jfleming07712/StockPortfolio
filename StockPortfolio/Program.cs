@@ -22,12 +22,25 @@ namespace StockPortfolio
             UserInterface userInterface = new UserInterface();
             UserAccountCreator userAccountCreator = new UserAccountCreator();
             User user = new User();
-            ProgramContext programContext = new ProgramContext();
+            ProgramContext programContext = new ProgramContext()
+            {
+                Stock = stock,
+                AddStockInfo = addStockInfo,
+                JsonDownloader = jsonDownloader,
+                DailyRecordList = dailyRecordList,
+                DailyStockRecord = dailyStockRecord,
+                Calculations = calculations,
+                DownloadStockHistoricalRecords = downloadStockHistoricalRecords,
+                UserInterface = userInterface,
+                UserAccountCreator = userAccountCreator,
+                User = user,
+                SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt",
+                SourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt",
+                SourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt",
+                SourceFileKey = @"C:\Users\jflem\Documents\Notepad stuff\alpha vantage api key"
+            };
 
-            programContext.SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt";
-            programContext.SourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt";
-            programContext.SourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt";
-            programContext.SourceFileKey = @"C:\Users\jflem\Documents\Notepad stuff\alpha vantage api key.txt";
+            
 
             using (var reader = new StreamReader(programContext.SourceFileKey))
             {
