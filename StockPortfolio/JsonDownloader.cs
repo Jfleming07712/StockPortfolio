@@ -15,7 +15,7 @@ namespace StockPortfolio
         {
             using (var client = new WebClient())
             {
-                string RawJson = client.DownloadString("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + programContext.Symbol + programContext.AlphaVantageKey);
+                string RawJson = client.DownloadString("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + programContext.Symbol + "&outputsize=full&apikey=" + programContext.AlphaVantageKey);
 
                 recordList = JsonConvert.DeserializeObject<List<DailyStockRecord>>(RawJson);
 

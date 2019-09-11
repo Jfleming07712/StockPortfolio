@@ -55,6 +55,13 @@ where username = '{enteredPortfolioName}'").ToList();
                         this.AddPortfolioToDatabase(programContext, enteredPortfolioName);
                     }
                 }
+                Console.WriteLine("Your portfolios");
+                foreach (Portfolio portfolio in programContext.PortfolioList)
+                {
+                    Console.WriteLine(portfolio.PortfolioName);
+                }
+                Console.ReadLine();
+                programContext.UserInterface.RegisteredUserMenu(programContext);
             }
         }
 
@@ -63,11 +70,11 @@ where username = '{enteredPortfolioName}'").ToList();
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 var ownedPortfolioNames = connection.Query(
-$@"declare @portfolioName nvarchar(10)
+$@"declare @portfolioName nvarchar(max)
 declare @AcctID int
 set @portfolioName = '{enteredPortfolioName}'
 set @AcctID = '{programContext.User.AcctID}'
-insert into AccountLoginInfo (Username, Password)
+insert into Portfolio (PortfolioID, AcctID)
 values (@portfolioName, @AcctID);");
             }
         }

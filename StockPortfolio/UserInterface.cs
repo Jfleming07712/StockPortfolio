@@ -105,6 +105,7 @@ namespace StockPortfolio
                 case "3":
                     {
                         // Create a portfolio
+                        programContext.Portfolio.CreatePortfolio(programContext);
                         break;
                     }
 

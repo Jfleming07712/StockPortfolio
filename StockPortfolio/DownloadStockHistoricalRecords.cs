@@ -10,7 +10,7 @@ namespace StockPortfolio
         {
             Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
 
-            var stockToDownload = Console.ReadLine();
+            programContext.Symbol = Console.ReadLine();
 
             programContext.JsonDownloader.AlphaVantageDownloader(programContext);
 

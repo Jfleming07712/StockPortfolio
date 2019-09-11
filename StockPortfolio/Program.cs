@@ -44,16 +44,17 @@ namespace StockPortfolio
                 SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt",
                 SourceFile2 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist2.txt",
                 SourceFile3 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist3.txt",
-                SourceFileKey = @"C:\Users\jflem\Documents\Notepad stuff\alpha vantage api key"
+                SourceFileKey = @"C:\Users\jflem\Documents\Notepadstuff\alphavantageapikey.txt"
             };
 
-            
+            programContext.AlphaVantageKey = File.ReadAllText(@"C:\Users\jflem\Documents\Notepadstuff\alphavantageapikey.txt");
 
-            using (var reader = new StreamReader(programContext.SourceFileKey))
-            {
-                programContext.AlphaVantageKey = reader.ReadLine();
-            }
-
+            //using (var reader = new StreamReader(programContext.SourceFileKey))
+            //{
+            //    programContext.AlphaVantageKey = File.ReadLines();
+            //}
+            //Console.WriteLine(programContext.AlphaVantageKey);
+            //Console.ReadLine();
 
             // test section
 
