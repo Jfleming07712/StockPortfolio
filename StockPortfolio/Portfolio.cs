@@ -89,7 +89,7 @@ values (@portfolioName, @AcctID);");
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
-                var tempPortfolioList = connection.Query(
+                var tempPortfolioList = connection.Query<Portfolio>(
 $@"select *
 from Portfolio
 where AcctID = '{programContext.User.AcctID}'").ToList();
