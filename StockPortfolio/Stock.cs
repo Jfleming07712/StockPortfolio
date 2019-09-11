@@ -4,7 +4,6 @@ using System.Text;
 
 namespace StockPortfolio
 {
-    ///"Symbol","Name","LastSale","MarketCap","IPOyear","Sector","industry","Summary Quote",
     public class Stock
     {
         public string Symbol { get; set; }

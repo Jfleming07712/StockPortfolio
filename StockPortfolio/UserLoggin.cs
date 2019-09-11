@@ -18,7 +18,7 @@ namespace StockPortfolio
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 var registeredUser = connection.QuerySingle<User>(
-                    $@"select username
+                    $@"select *
                         from AccountLoginInfo
                         where username = '{givenUserName}'");
                 if (givenUserName == registeredUser.UserName)

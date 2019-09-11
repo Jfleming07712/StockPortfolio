@@ -45,6 +45,7 @@ namespace StockPortfolio
                 case "4":
                     {
                         // Log into an account
+                        programContext.UserLoggin.LogginUser(programContext);
                         break;
                     }
 
@@ -56,6 +57,9 @@ namespace StockPortfolio
                         break;
                     }
             }
+
+            this.StartUpOptions(programContext);
+
         }
 
         public void RegisteredUserMenu(ProgramContext programContext)
@@ -71,11 +75,12 @@ namespace StockPortfolio
             Console.WriteLine("4) Delete a portfolio");
             Console.WriteLine("5) Update records for stocks in your portfolio");
             Console.WriteLine("6) View portfolio");
-            Console.WriteLine("7) View Stocks in your portfolio");
-            Console.WriteLine("8) Deposit or withdraw cash");
-            Console.WriteLine("9) View cash account");
-            Console.WriteLine("10) View cash transaction record");
-            Console.WriteLine("11) Log out");
+            Console.WriteLine("7) Buy/Sell stock");
+            Console.WriteLine("8) View Stocks in your portfolio");
+            Console.WriteLine("9) Deposit or withdraw cash");
+            Console.WriteLine("10) View cash account");
+            Console.WriteLine("11) View cash transaction record");
+            Console.WriteLine("12) Log out");
 
             Console.WriteLine("Please enter the number of your selection");
 
@@ -123,29 +128,35 @@ namespace StockPortfolio
 
                 case "7":
                     {
-                        // View stocks in portfolio
+                        // Buy/Sell Stock
                         break;
                     }
 
                 case "8":
                     {
-                        // deposit or withdraw cash
+                        // View stocks in portfolio
                         break;
                     }
 
                 case "9":
                     {
-                        // View cash account
+                        // deposit or withdraw cash
                         break;
                     }
 
                 case "10":
                     {
-                        // view cash transaction record
+                        // View cash account
                         break;
                     }
 
                 case "11":
+                    {
+                        // view cash transaction record
+                        break;
+                    }
+
+                case "12":
                     {
                         // Log out
                         break;
