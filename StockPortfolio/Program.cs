@@ -22,6 +22,8 @@ namespace StockPortfolio
             UserInterface userInterface = new UserInterface();
             UserAccountCreator userAccountCreator = new UserAccountCreator();
             UserLoggin userLoggin = new UserLoggin();
+            List<Portfolio> portfolioList = new List<Portfolio>();
+            Portfolio portfolio = new Portfolio();
             User user = new User();
             ProgramContext programContext = new ProgramContext()
             
@@ -35,6 +37,8 @@ namespace StockPortfolio
                 DownloadStockHistoricalRecords = downloadStockHistoricalRecords,
                 UserInterface = userInterface,
                 UserAccountCreator = userAccountCreator,
+                PortfolioList = portfolioList,
+                Portfolio = portfolio,
                 UserLoggin = userLoggin,
                 User = user,
                 SourceFile1 = @"c:\users\jflem\source\repos\stockportfolio\stockportfolio\companylist1.txt",

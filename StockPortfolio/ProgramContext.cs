@@ -17,6 +17,8 @@ namespace StockPortfolio
         public UserAccountCreator UserAccountCreator { get; set; }
         public User User { get; set; }
         public UserLoggin UserLoggin { get; set; }
+        public List<Portfolio> PortfolioList { get; set; }
+        public Portfolio Portfolio { get; set; }
         public string SourceFile1 { get; set; }
         public string SourceFile2 { get; set; }
         public string SourceFile3 { get; set; }
