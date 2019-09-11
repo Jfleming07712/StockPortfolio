@@ -41,6 +41,9 @@ namespace StockPortfolio
             if (givenPassword == registeredUser.Password)
             {
                 // grant access
+                programContext.User.AcctID = registeredUser.AcctID;
+                programContext.User.UserName = registeredUser.UserName;
+                programContext.User.Password = registeredUser.Password;
                 programContext.User.LoggedIn = true;
                 programContext.UserInterface.RegisteredUserMenu(programContext);
             }

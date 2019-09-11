@@ -35,10 +35,13 @@ namespace StockPortfolio
             {
                 using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
                 {
-                    var ownedPortfolioNames = connection.Query<User>(
-$@"select username
-from AccountLoginInfo
-where username = '{enteredPortfolioName}'").ToList();
+                    var ownedPortfolioNames = connection.Query(
+$@"select PortfolioName
+from Portfolio
+where PortfolioName = '{enteredPortfolioName}'").ToList();
+
+                    ///////////////
+
                     if (ownedPortfolioNames.Count != 0)
                     {
                         Console.WriteLine("Username is in use please pick another");
@@ -50,9 +53,11 @@ where username = '{enteredPortfolioName}'").ToList();
 
                         programContext.Portfolio.AcctID = programContext.User.AcctID;
 
-                        programContext.PortfolioList.Add(programContext.Portfolio);
+                        //programContext.PortfolioList.Add(programContext.Portfolio);
 
                         this.AddPortfolioToDatabase(programContext, enteredPortfolioName);
+
+                        this.UpdatePortfolioList(programContext);
                     }
                 }
                 Console.WriteLine("Your portfolios");
@@ -74,9 +79,27 @@ $@"declare @portfolioName nvarchar(max)
 declare @AcctID int
 set @portfolioName = '{enteredPortfolioName}'
 set @AcctID = '{programContext.User.AcctID}'
-insert into Portfolio (PortfolioID, AcctID)
+insert into Portfolio (PortfolioName, AcctID)
 values (@portfolioName, @AcctID);");
             }
+        }
+
+        //  BIG PROBLEMS HERE BUT i AM TOO TIRED TO KEEP GOING
+        public void UpdatePortfolioList(ProgramContext programContext)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
+            {
+                var tempPortfolioList = connection.Query(
+$@"select *
+from Portfolio
+where AcctID = '{programContext.User.AcctID}'").ToList();
+
+                foreach (var portfolio in tempPortfolioList)
+                {
+                    programContext.PortfolioList.Add(portfolio);
+                }
+            }
+            
         }
     }
 }
