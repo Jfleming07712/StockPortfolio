@@ -6,6 +6,7 @@ namespace StockPortfolio
 {
     public class ProgramContext
     {
+        public TransactionRecord TransactionRecord { get; set; }
         public Stock Stock { get; set; }
         public AddStockInfo AddStockInfo { get; set; }
         public JsonDownloader JsonDownloader { get; set; }

@@ -12,6 +12,7 @@ namespace StockPortfolio
     {
         static void Main(string[] args)
         {
+            TransactionRecord transactionRecord = new TransactionRecord();
             Stock stock = new Stock();
             AddStockInfo addStockInfo = new AddStockInfo();
             JsonDownloader jsonDownloader = new JsonDownloader();
@@ -28,6 +29,7 @@ namespace StockPortfolio
             ProgramContext programContext = new ProgramContext()
             
             {
+                TransactionRecord = transactionRecord,
                 Stock = stock,
                 AddStockInfo = addStockInfo,
                 JsonDownloader = jsonDownloader,
@@ -49,12 +51,7 @@ namespace StockPortfolio
 
             programContext.AlphaVantageKey = File.ReadAllText(@"C:\Users\jflem\Documents\Notepadstuff\alphavantageapikey.txt");
 
-            //using (var reader = new StreamReader(programContext.SourceFileKey))
-            //{
-            //    programContext.AlphaVantageKey = File.ReadLines();
-            //}
-            //Console.WriteLine(programContext.AlphaVantageKey);
-            //Console.ReadLine();
+            
 
             // test section
 

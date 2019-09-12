@@ -112,6 +112,7 @@ namespace StockPortfolio
                 case "4":
                     {
                         // Delete a portfolio
+                        programContext.Portfolio.DeletePortfolio(programContext);
                         break;
                     }
 
@@ -130,6 +131,7 @@ namespace StockPortfolio
                 case "7":
                     {
                         // Buy/Sell Stock
+                        programContext.TransactionRecord.BuySellStock(programContext);
                         break;
                     }
 
@@ -168,6 +170,7 @@ namespace StockPortfolio
                         break;
                     }
             }
+            this.RegisteredUserMenu(programContext);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace StockPortfolio
             using (var reader = new StreamReader(source))
             using (var csv = new CsvReader(reader))
             {
+                //csv.Configuration.RegisterClassMap<StockMap>();
                 var records = csv.GetRecords<Stock>();
                 foreach (Stock record in records)
                 {

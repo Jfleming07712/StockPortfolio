@@ -40,7 +40,6 @@ $@"select PortfolioName
 from Portfolio
 where PortfolioName = '{enteredPortfolioName}'").ToList();
 
-                    ///////////////
 
                     if (ownedPortfolioNames.Count != 0)
                     {
@@ -84,15 +83,16 @@ values (@portfolioName, @AcctID);");
             }
         }
 
-        //  BIG PROBLEMS HERE BUT i AM TOO TIRED TO KEEP GOING
         public void UpdatePortfolioList(ProgramContext programContext)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 var tempPortfolioList = connection.Query<Portfolio>(
-$@"select *
+$@"declare @UserAcctID int
+set @UserAcctID = '{programContext.User.AcctID}'
+select *
 from Portfolio
-where AcctID = '{programContext.User.AcctID}'").ToList();
+where AcctID = @UserAcctID").ToList();
 
                 foreach (var portfolio in tempPortfolioList)
                 {
@@ -100,6 +100,59 @@ where AcctID = '{programContext.User.AcctID}'").ToList();
                 }
             }
             
+        }
+
+        public void DeletePortfolio(ProgramContext programContext)
+        {
+            string tempPortfolioToDelete;
+            List<Portfolio> tempPortfolioList;
+
+            Console.WriteLine("Which portfolio would you like to delete?  Please type the name");
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
+            {
+                tempPortfolioList = connection.Query<Portfolio>(
+$@"declare @UserAcctID int
+set @UserAcctID = '{programContext.User.AcctID}'
+Select * 
+from Portfolio 
+where AcctId = @UserAcctID").ToList();
+            }
+
+            foreach (Portfolio portfolio in tempPortfolioList)
+            {
+                Console.WriteLine(portfolio.PortfolioName);
+            }
+
+                tempPortfolioToDelete = Console.ReadLine();
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
+            {
+                connection.Query(
+$@"declare @PortfolioToDelete NvarChar(max)
+declare @UserAcctID int
+set @PortfolioToDelete = '{tempPortfolioToDelete}'
+set @UserAcctID = '{programContext.User.AcctID}'
+DELETE FROM Portfolio WHERE PortfolioName = @PortfolioToDelete and AcctID = @UserAcctID;");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("New portfolio list");
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
+            {
+                tempPortfolioList = connection.Query<Portfolio>(
+$@"declare @UserAcctID int
+set @UserAcctID = '{programContext.User.AcctID}'
+Select * 
+from Portfolio 
+where AcctId = @UserAcctID").ToList();
+            }
+
+            foreach (Portfolio portfolio in tempPortfolioList)
+            {
+                Console.WriteLine(portfolio.PortfolioName);
+            }
         }
     }
 }
