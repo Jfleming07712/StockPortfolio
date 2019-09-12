@@ -119,6 +119,7 @@ namespace StockPortfolio
                 case "5":
                     {
                         // Update records for stocks in portfolio
+                        programContext.DownloadStockHistoricalRecords.UpdateStocksInPortfolio(programContext);
                         break;
                     }
 

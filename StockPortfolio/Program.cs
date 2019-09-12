@@ -51,9 +51,12 @@ namespace StockPortfolio
 
             programContext.AlphaVantageKey = File.ReadAllText(@"C:\Users\jflem\Documents\Notepadstuff\alphavantageapikey.txt");
 
-            
+
 
             // test section
+
+
+
 
 
             //Console.ReadLine();
