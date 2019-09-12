@@ -27,7 +27,7 @@ namespace StockPortfolio
             }
         }
 
-        public void AlphaVantageDownloader(ProgramContext programContext)
+        public void AlphaVantageDownloader(ProgramContext programContext, string symbol)
         {
             // Creating the connection object
             IAvapiConnection connection = AvapiConnection.Instance;
@@ -42,7 +42,7 @@ namespace StockPortfolio
             // Perform the TIME_SERIES_DAILY request and get the result
             IAvapiResponse_TIME_SERIES_DAILY_ADJUSTED time_series_dailyResponse =
             time_series_daily_adjusted.Query(
-                 programContext.Symbol,
+                 symbol,
                  Const_TIME_SERIES_DAILY_ADJUSTED.TIME_SERIES_DAILY_ADJUSTED_outputsize.full);
 
             // Printout the results

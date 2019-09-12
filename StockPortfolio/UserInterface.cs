@@ -31,7 +31,7 @@ namespace StockPortfolio
                 case "2":
                     {
                         // Research daily records for a stock
-                        programContext.DownloadStockHistoricalRecords.DownloadHistoricalStockRecords(programContext);
+                        programContext.DownloadStockHistoricalRecords.DownloadHistoricalStockRecordsUI(programContext);
                         break;
                     }
 
@@ -98,7 +98,7 @@ namespace StockPortfolio
                 case "2":
                     {
                         // Research daily records for a stock
-                        programContext.DownloadStockHistoricalRecords.DownloadHistoricalStockRecords(programContext);
+                        programContext.DownloadStockHistoricalRecords.DownloadHistoricalStockRecordsUI(programContext);
                         break;
                     }
 

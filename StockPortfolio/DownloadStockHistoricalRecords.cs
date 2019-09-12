@@ -13,13 +13,13 @@ namespace StockPortfolio
         {
             Console.WriteLine("Which stock would you like to download?  Please enter the symbol");
 
-            programContext.Symbol = Console.ReadLine();
+            var symbol = Console.ReadLine();
 
-            this.DownloadHistoricalStockRecords(programContext);
+            this.DownloadHistoricalStockRecords(programContext, symbol);
         }
-        public void DownloadHistoricalStockRecords(ProgramContext programContext)
+        public void DownloadHistoricalStockRecords(ProgramContext programContext, string symbol)
         {
-            programContext.JsonDownloader.AlphaVantageDownloader(programContext);
+            programContext.JsonDownloader.AlphaVantageDownloader(programContext, symbol);
 
             programContext.Calculations.CalculationsForDailyRecord(programContext);
 
@@ -31,7 +31,6 @@ namespace StockPortfolio
         public void UpdateStocksInPortfolio(ProgramContext programContext)
         {
             IEnumerable<string> bigSymbolList = null;
-            string portfolioIDsToSearch = null;
             IEnumerable<string> symbols;
             IEnumerable<int> portfolioIDList;
 
@@ -46,7 +45,7 @@ namespace StockPortfolio
                 using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
                 {
                     symbols = connection.Query<string>(
-                          $@"Select symbol from TransactionRecord where PortfolioID = '{portfolioID}'"); //NEED TO LOOK AT THIS AGAIN.  
+                          $@"Select symbol from TransactionRecord tr join Stock s on s.StockID = tr.StockID where PortfolioID = '{portfolioID}'"); //NEED TO LOOK AT THIS AGAIN.  
 
                     bigSymbolList = (bigSymbolList ?? Enumerable.Empty<string>()).Concat(symbols ?? Enumerable.Empty<string>());
                 }
@@ -56,14 +55,9 @@ namespace StockPortfolio
 
             foreach (string symbol in bigSymbolList)
             {
-                programContext.Symbol = symbol;
-                this.DownloadHistoricalStockRecords(programContext);
+                var symbolToUpdate = symbol;
+                this.DownloadHistoricalStockRecords(programContext, symbol);
             }
-            ///////////////////////////////
-            Console.ReadLine();
-            ///////////////////////////////
-
-            
         }
     }
 }

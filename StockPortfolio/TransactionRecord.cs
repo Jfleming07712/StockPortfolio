@@ -78,7 +78,7 @@ where PortfolioName = @PortfolioName");
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 tempStockID = connection.QuerySingle<string>(
-    $@"Declare @symbol nchar(10) = '{symbol}'
+    $@"Declare @symbol nvarchar(10) = '{symbol}'
 Select StockID
 from Stock
 where Symbol = @symbol");
