@@ -65,7 +65,7 @@ where PortfolioName = @enteredPortfolioName").ToList();
                 {
                     Console.WriteLine(portfolio.PortfolioName);
                 }
-                Console.ReadLine();
+                Console.WriteLine("");
                 programContext.UserInterface.RegisteredUserMenu(programContext);
             }
         }
