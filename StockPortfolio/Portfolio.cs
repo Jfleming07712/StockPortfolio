@@ -36,9 +36,10 @@ namespace StockPortfolio
                 using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
                 {
                     var ownedPortfolioNames = connection.Query(
-$@"select PortfolioName
+$@"declare @enteredPortfolioName nvarchar(max) = '{enteredPortfolioName}'
+select PortfolioName
 from Portfolio
-where PortfolioName = '{enteredPortfolioName}'").ToList();
+where PortfolioName = @enteredPortfolioName").ToList();
 
 
                     if (ownedPortfolioNames.Count != 0)
@@ -153,6 +154,11 @@ where AcctId = @UserAcctID").ToList();
             {
                 Console.WriteLine(portfolio.PortfolioName);
             }
+        }
+
+        public void ViewPortfolioUI(ProgramContext programContext)
+        {
+
         }
     }
 }

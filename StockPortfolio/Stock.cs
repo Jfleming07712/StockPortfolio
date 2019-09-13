@@ -6,7 +6,6 @@ namespace StockPortfolio
 {
     public class Stock
     {
-        //public int StockID { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
         public string LastSale { get; set; }

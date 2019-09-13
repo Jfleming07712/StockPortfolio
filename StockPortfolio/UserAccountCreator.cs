@@ -32,9 +32,10 @@ namespace StockPortfolio
                 using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
                 {
                     var ownedUserNames = connection.Query<User>(
-                        $@"select username
-                        from AccountLoginInfo
-                        where username = '{tempUserName}'").ToList();
+$@"declare @tempUserName nvarchar(max) = '{tempUserName}
+select username
+from AccountLoginInfo
+where username = @tempUserName").ToList();
                     if (ownedUserNames.Count != 0)
                     {
                         Console.WriteLine("Username is in use please pick another");

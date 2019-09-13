@@ -18,9 +18,10 @@ namespace StockPortfolio
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 var registeredUser = connection.QuerySingle<User>(
-                    $@"select *
-                        from AccountLoginInfo
-                        where username = '{givenUserName}'");
+$@"declare @givenUserName nvarchar(max) =  '{givenUserName}'
+select *
+from AccountLoginInfo
+where username = @givenUserName");
                 if (givenUserName == registeredUser.UserName)
                 {
                     this.VerifyPassword(programContext, registeredUser);

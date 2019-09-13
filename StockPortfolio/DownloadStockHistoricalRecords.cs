@@ -37,7 +37,8 @@ namespace StockPortfolio
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
               portfolioIDList = connection.Query<int>(
-                    $@"Select PortfolioID from Portfolio p where AcctID = '{programContext.User.AcctID}'");
+$@"declare @AcctID int = '{programContext.User.AcctID}'
+Select PortfolioID from Portfolio p where AcctID = @AcctID");
             }
 
             foreach (int portfolioID in portfolioIDList)
@@ -45,7 +46,8 @@ namespace StockPortfolio
                 using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
                 {
                     symbols = connection.Query<string>(
-                          $@"Select symbol from TransactionRecord tr join Stock s on s.StockID = tr.StockID where PortfolioID = '{portfolioID}'"); //NEED TO LOOK AT THIS AGAIN.  
+$@"declare @portfolioID int = '{portfolioID}'
+Select symbol from TransactionRecord tr join Stock s on s.StockID = tr.StockID where PortfolioID = @portfolioID");  
 
                     bigSymbolList = (bigSymbolList ?? Enumerable.Empty<string>()).Concat(symbols ?? Enumerable.Empty<string>());
                 }

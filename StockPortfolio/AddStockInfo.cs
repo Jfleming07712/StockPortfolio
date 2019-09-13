@@ -30,12 +30,19 @@ namespace StockPortfolio
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("StockPortfolio")))
             {
                 connection.Query(
-                    $@"MERGE stock AS [target]
-                    USING (SELECT '{record.Symbol}' AS symbol) AS [source]
-                    ON [target].symbol = [source].symbol
-                    WHEN NOT MATCHED THEN INSERT
-                    (CompanyName, Symbol, MarketCap, IpoYear, Sector)
-                    VALUES ('{record.Name}', '{record.Symbol}', '{record.MarketCap}', '{record.IPOyear}', '{record.Sector}');");
+$@"
+declare @symbol nvarchar(10) = '{record.Symbol}',
+@name nvarchar(max) = '{record.Name}',
+@marketCap nvarchar(max) = '{record.MarketCap}',
+@IPOyear nvarchar(max) = '{record.IPOyear}',
+@sector nvarchar(max) = '{record.Sector}'
+
+MERGE stock AS [target]
+USING (SELECT '{record.Symbol}' AS symbol) AS [source]
+ON [target].symbol = [source].symbol
+WHEN NOT MATCHED THEN INSERT
+(CompanyName, Symbol, MarketCap, IpoYear, Sector)
+VALUES (@name, @symbol, @marketCap, @IPOyear, @sector);");
             }
         }
 
@@ -46,12 +53,26 @@ namespace StockPortfolio
                 foreach (DailyStockRecord record in programContext.DailyRecordList)
                 {
                     connection.Query(
-                        $@"INSERT INTO DailyRecord
-                        (StockID, Symbol, RecordDate, OpenPrice, DailyHigh, DailyLow, ClosePrice, AdjustedClose, Volume, High52Week, Low52Week, OverNightChange, 
-                        DailyChange, VolatilityRating, DividendYield)
-                        Select StockID, '{record.Symbol}', '{record.Date}', '{record.Open}', '{record.High}', '{record.Low}', '{record.Close}', '{record.AdjustedClose}',
-                        '{record.Volume}', '{record.High52Week}', '{record.Low52Week}', '{record.OverNightChange}', '{record.DailyChange}', '{record.VolitilityRating}',
-                        '{record.DividendYield}' from Stock where Symbol = '{record.Symbol}';");
+$@"declare @symbol nvarchar(10) = '{record.Symbol}',
+@date Date = '{record.Date}',
+@high decimal(18,6) = '{record.High}',
+@low decimal(18,6) = '{record.Low}',
+@close decimal(18,6) = '{record.Close}',
+@adjustedClose decimal(18,6) = '{record.AdjustedClose}',
+@volume decimal(18,6) = '{record.Volume}',
+@high52Week decimal(18,6) = '{record.High52Week}',
+@low52Week decimal(18,6) = '{record.Low52Week}',
+@overNightChange decimal(18,6) = '{record.OverNightChange}',
+@dailyChange decimal(18,6) = '{record.DailyChange}',
+@volitilityRating decimal(18,6) = '{record.VolitilityRating}',
+@dividendYield decimal(18,6) = '{record.DividendYield}',
+
+INSERT INTO DailyRecord
+(StockID, Symbol, RecordDate, OpenPrice, DailyHigh, DailyLow, ClosePrice, AdjustedClose, Volume, High52Week, Low52Week, OverNightChange, 
+DailyChange, VolatilityRating, DividendYield)
+Select StockID, @symbol, @date, @open, @high, @low, @close, @adjustedClose,
+@volume, @high52Week, @low52Week, @overNightChange, @dailyChange, @volitilityRating,
+@dividendYield from Stock where Symbol = '@symbol;");
                 }
         }
 
